@@ -8,7 +8,7 @@ Takes a CSV file an transforms average power values in the given csv and transfo
 
 ## Usage
 
-`node transform.js <source-file> <destination-file>`
+`node transform.js <source-file> <destination-file> [<sourceTag>]`
 
 ## Licence
 

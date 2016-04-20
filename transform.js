@@ -11,25 +11,72 @@ writableStream.on("finish", function(){
 csvStream.pipe(writableStream);
 
 var lastRow = null;
+var work = 0;
+var granularity = null;
+var firstRun = true;
+
+var tag = process.argv[4] || 'PowerConsumed';
 
 var stream = fs.createReadStream(process.argv[2])
     .pipe(csv.parse({headers: true, delimiter: ";"}))
     .transform(function (row) {
         return {
             timestamp: parseInt(row.Timestamp),
-            value: row.PowerIn
+            value: parseFloat(row[tag])
         };
     })
     .on("readable", function () {
+
         while (null !== (row = stream.read())) {
-            if (lastRow != null) {
-                csvStream.write({Timestamp: row.timestamp-1, PowerIn: lastRow.value});
+            if (firstRun) {
+                csvStream.write({
+                    Timestamp: row.timestamp - 1, 
+                    PowerIn: null,
+                    PowerConsumed: null,
+                    WorkIn: null,
+                    WorkConsumed: null
+                });
+                firstRun = false;
             }
-            csvStream.write({Timestamp: row.timestamp, PowerIn: row.value});
+
+            
+            if (lastRow !== null) {
+                csvStream.write({
+                    Timestamp: row.timestamp-1, 
+                    PowerIn: lastRow.value,
+                    PowerConsumed: lastRow.value, 
+                    WorkIn: work,
+                    WorkConsumed: work
+                });
+                granularity = row.timestamp - lastRow.timestamp;
+                work = work + powerToWork(lastRow.value, granularity);
+            }
+            csvStream.write({
+                Timestamp: row.timestamp, 
+                PowerIn: row.value,
+                PowerConsumed: row.value,
+                WorkIn: work,
+                WorkConsumed: work
+            });
+
             lastRow = row;
         }
     })
     .on("end", function() {
+        csvStream.write({
+                Timestamp: lastRow.timestamp + 1, 
+                PowerIn: null,
+                PowerConsumed: null,
+                WorkIn: null,
+                WorkConsumed: null
+            });
         csvStream.end();
         process.exit;
     });
+
+var powerToWork = function(power, granularity) {
+    if (!granularity) {
+        return 0;    
+    }
+    return power / (3600 / granularity);
+};

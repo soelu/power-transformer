@@ -31,10 +31,10 @@ var stream = fs.createReadStream(process.argv[2])
             if (firstRun) {
                 csvStream.write({
                     Timestamp: row.timestamp - 1, 
-                    PowerIn: null,
-                    PowerConsumed: null,
-                    WorkIn: null,
-                    WorkConsumed: null
+                    PowerIn: 'null',
+                    PowerConsumed: 'null',
+                    WorkIn: 'null',
+                    WorkConsumed: 'null'
                 });
                 firstRun = false;
             }
@@ -65,10 +65,10 @@ var stream = fs.createReadStream(process.argv[2])
     .on("end", function() {
         csvStream.write({
                 Timestamp: lastRow.timestamp + 1, 
-                PowerIn: null,
-                PowerConsumed: null,
-                WorkIn: null,
-                WorkConsumed: null
+                PowerIn: 'null',
+                PowerConsumed: 'null',
+                WorkIn: 'null',
+                WorkConsumed: 'null'
             });
         csvStream.end();
         process.exit;

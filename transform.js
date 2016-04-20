@@ -1,7 +1,7 @@
 var csv = require("fast-csv"), fs = require("fs"), 
     path = require("path");
 
-var csvStream = csv.createWriteStream({headers: true, delimiter: ";"});
+var csvStream = csv.createWriteStream({headers: true, delimiter: ";", quote:null});
 var writableStream = fs.createWriteStream(process.argv[3]);
 
 writableStream.on("finish", function(){
@@ -17,7 +17,7 @@ var stream = fs.createReadStream(process.argv[2])
     .transform(function (row) {
         return {
             timestamp: parseInt(row.Timestamp),
-            value: parseFloat(row.PowerIn)
+            value: row.PowerIn
         };
     })
     .on("readable", function () {

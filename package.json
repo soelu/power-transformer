@@ -2,7 +2,7 @@
   "name": "power-doubler",
   "version": "1.0.0",
   "description": "--",
-  "main": "parse.js",
+  "main": "transform.js",
   "dependencies": {
     "path": "^0.12.7",
     "fast-csv": "^1.1.0",
@@ -12,6 +12,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Soeren Lubitz",
   "license": "MIT"
 }

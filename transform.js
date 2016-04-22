@@ -107,9 +107,12 @@ var stream = fs.createReadStream(sourceFileName)
         return rowObject;
     })
     .on("readable", function () {
-
-
         while (null !== (row = stream.read())) {
+            if (isNaN(row.timestamp)) {
+                console.warn('Error Parsing Timestamp');
+                continue;
+            }
+
             if (row.shifted) {
                 continue;
             }

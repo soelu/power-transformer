@@ -1,6 +1,6 @@
 {
   "name": "power-transformer",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Takes a CSV file an transforms average power values in the given csv and transforms them in a way that they represent average values.",
   "main": "transform.js",
   "dependencies": {

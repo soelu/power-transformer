@@ -1,12 +1,16 @@
 {
-  "name": "power-doubler",
-  "version": "2.0.1",
-  "description": "--",
+  "name": "power-transformer",
+  "version": "3.0.0",
+  "description": "Takes a CSV file an transforms average power values in the given csv and transforms them in a way that they represent average values.",
   "main": "transform.js",
   "dependencies": {
-    "path": "^0.12.7",
+    "circular-buffer": "0.0.6",
+    "command-line-args": "^2.1.6",
+    "command-line-usage": "^2.0.3",
     "fast-csv": "^1.1.0",
-    "fs": "^0.0.2"
+    "fs": "^0.0.2",
+    "moment": "^2.13.0",
+    "path": "^0.12.7"
   },
   "devDependencies": {},
   "scripts": {
